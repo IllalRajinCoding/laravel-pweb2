@@ -6,6 +6,7 @@ use App\Http\Controllers\PasienController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProdiController;
 use App\Models\book;
+use App\Http\Controllers\Admincontroller;
 
 Route::get('/', function () {
     return view('welcome');
@@ -43,10 +44,23 @@ Route::get('/pasien', [PasienController::class, 'index']);
 
 Route::get(
     'books/create',
-    [BookController::class, 'create'] 
+    [BookController::class, 'create']
 );
 
 Route::post(
     'books/store',
     [BookController::class, 'store']
 );
+
+Route::get('/admin', [Admincontroller::class, 'index']);
+Route::get(
+    'books/{id}',
+    [BookController::class, 'edit']
+);
+
+Route::put(
+    'books/update/{id}',
+    [BookController::class, 'update']
+);
+
+Route::delete('/books/{id}', [BookController::class, 'destroy'])->name('books.destroy');

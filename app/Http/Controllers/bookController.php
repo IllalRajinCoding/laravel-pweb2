@@ -30,4 +30,29 @@ class bookController extends Controller
 
         return redirect('/list')->with('success', 'Book created successfully.');
     }
+
+    public function edit($id)
+    {
+        $book = book::findOrFail($id);
+        return view('books.edit', compact('book'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            'author' => 'required|max:255',
+            'year' => 'required|integer'
+        ]);
+        $book = book::findOrFail($id);
+        $book->update($validatedData);
+        return redirect('/list')->with('success', 'Book updated successfully.');
+    }
+
+    public function destroy($id)
+    {
+        $book = book::findOrFail($id);
+        $book->delete();
+        return redirect('/list')->with('success', 'Book deleted successfully.');
+    }
 }
